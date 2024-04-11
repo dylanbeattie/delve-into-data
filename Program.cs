@@ -44,6 +44,8 @@ foreach (var word in counts.OrderBy(g => g.Key)) {
 	var thisWordIsInteresting = word.Value
 		.Where(e => e.Key != "@total")
 		.Select(evt => 100.000m * evt.Value / totals[evt.Key])
+		// Find any talk where a word occurs more than 2x the overall percentage,
+		// AND occurs more than THRESHOLD percent at this event.
 		.Any(pct => pct > 2 * totalPct && pct > THRESHOLD);
 	if (thisWordIsInteresting) {
 		Console.Write($"{word.Key},{totalPct:0.000}");
